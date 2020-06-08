@@ -3,8 +3,8 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Categoria
-from .forms import CategoriaForm
+from .models import Categoria, Subcategoria
+from .forms import CategoriaForm, SubcategoriaForm
 
 
 class CategoriaView (LoginRequiredMixin, generic.ListView):
@@ -35,7 +35,7 @@ class CategoriaEdit(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("inv:categoria_list")
     login_url= "bases:login"
 
-#se sobreescribe el metodo para obtener el usuario que esta creando el registro
+#se sobreescribe el metodo para obtener el usuario que esta editando el registro
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
@@ -45,3 +45,41 @@ class CategoriaDel(LoginRequiredMixin, generic.DeleteView):
     template_name ='inv/catalogos_del.html'
     context_object_name='obj'
     success_url=reverse_lazy("inv:categoria_list")
+
+class SubcategoriaView (LoginRequiredMixin, generic.ListView):
+    model = Subcategoria
+    template_name = "inv/subcategoria_list.html"
+    context_object_name = "obj"
+    login_url = 'bases:login'
+
+class SubcategoriaNew(LoginRequiredMixin, generic.CreateView):
+    model = Subcategoria
+    template_name = "inv/subcategoria_form.html"
+    context_object_name = "obj"
+    form_class = SubcategoriaForm
+    success_url = reverse_lazy("inv:subcategoria_list")
+    login_url= "bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+class SubcategoriaEdit(LoginRequiredMixin, generic.UpdateView):
+    model = Subcategoria
+    template_name = "inv/subcategoria_form.html"
+    context_object_name = "obj"
+    form_class = SubcategoriaForm
+    success_url = reverse_lazy("inv:subcategoria_list")
+    login_url= "bases:login"
+
+#se sobreescribe el metodo para obtener el usuario que esta editando el registro
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+
+class SubcategoriaDel(LoginRequiredMixin, generic.DeleteView):
+    model = Subcategoria
+    template_name ='inv/catalogos_del.html'
+    context_object_name='obj'
+    success_url=reverse_lazy("inv:subcategoria_list")
