@@ -129,3 +129,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+#cerrar sesiones de los usuarios
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+#SESSION_COOKIE_AGE=60
+#SESSION_SAVE_EVERY_REQUEST = True
