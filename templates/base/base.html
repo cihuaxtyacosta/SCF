@@ -73,6 +73,7 @@
             <a class="collapse-item" href="{% url 'inv:subcategoria_list' %}">Sub categorías</a>
             <a class="collapse-item" href="{% url 'inv:marca_list' %}">Marcas</a>
             <a class="collapse-item" href="{% url 'inv:unidadMedida_list' %}">Unidades de medida</a>
+            <a class="collapse-item" href="{% url 'inv:producto_list' %}">Productos</a>
           </div>
         </div>
       </li>
@@ -310,8 +311,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }} </span>
+                <img class="img-profile rounded-circle" src=" {% static 'base/img/avatar_user.png' %} ">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -404,6 +405,8 @@
     </div>
   </div>
 
+<div class="modal fade" id="popup"></div>
+
   <!-- Bootstrap core JavaScript-->
   <script src="{% static 'base/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'base/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -420,6 +423,28 @@
 
 {% block js_page %} {% endblock js_page %}
 
+{%block control_modal%}
+<script>
+  function abrir_modal(url)
+  {
+
+    $("#popup").load(url, function(){
+      $(this).modal({
+        backdrop: 'static',
+        keyboard: false
+      })
+      $(this).modal('show');
+    });
+    return false;
+  }
+
+  function cerrar_modal()
+  {
+    $('#popup').modal('hide');
+    return false;
+  }
+</script>
+{% endblock %}
 </body>
 
 </html>
